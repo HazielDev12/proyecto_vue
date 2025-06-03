@@ -2,6 +2,12 @@
   <Navbar />
   <div class="container mt-4">
     <h2 class="mb-4 text-center">Estado de préstamos</h2>
+    <div class="d-flex justify-content-end mb-3">
+      <button class="btn btn-outline-danger" @click="descargarPDF">
+        <i class="bi bi-file-earmark-pdf-fill me-1"></i>
+        Generar PDF
+      </button>
+    </div>
 
     <div v-if="prestamos.length" class="table-responsive">
       <table class="table table-bordered table-striped text-center">
@@ -156,5 +162,28 @@ const eliminarPrestamo = async (id) => {
     console.error(error);
   }
 };
+
+const descargarPDF = async () => {
+  try {
+    const token = localStorage.getItem('token')
+    const response = await fetch('http://localhost:8000/PROJECT/prestamos/pdfreport', {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+
+    if (!response.ok) throw new Error('Error al generar PDF')
+
+    const blob = await response.blob()
+    const url = window.URL.createObjectURL(blob)
+    window.open(url, '_blank') // O usar un <a download> si quieres que se descargue
+
+  } catch (error) {
+    alert('No se pudo generar el PDF')
+    console.error(error)
+  }
+}
+
+
 
 </script>
