@@ -9,7 +9,7 @@
       </button>
     </div>
 
-    <div v-if="prestamos.length" class="table-responsive">
+    <div v-if="prestamos.length > 0" class="table-responsive">
       <table class="table table-bordered table-striped text-center">
         <thead class="table-dark">
           <tr>
@@ -135,9 +135,9 @@ onMounted(async () => {
   }
 })
 
-const formatearFecha = (iso) => {
-  if (!iso) return '-'
-  const [año, mes, dia] = iso.split('-')
+const formatearFecha = (fecha) => {
+  if (!fecha) return '-'
+  const [año, mes, dia] = fecha.split('-')
   return `${dia}-${mes}-${año}`
 }
 
@@ -176,7 +176,7 @@ const descargarPDF = async () => {
 
     const blob = await response.blob()
     const url = window.URL.createObjectURL(blob)
-    window.open(url, '_blank') // O usar un <a download> si quieres que se descargue
+    window.open(url, '_blank')
 
   } catch (error) {
     alert('No se pudo generar el PDF')

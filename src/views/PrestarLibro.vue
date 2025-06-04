@@ -3,7 +3,7 @@
   <div class="container mt-5">
     <h2 class="mb-4 text-center">Prestar Libro</h2>
 
-    <div v-if="ejemplares.length" class="mx-auto" style="max-width: 500px;">
+    <div v-if="ejemplares.length > 0" class="mx-auto" style="max-width: 500px;">
       <div class="mb-3">
         <label for="ejemplar" class="form-label">Selecciona un ejemplar:</label>
         <select id="ejemplar" v-model="ejemplarSeleccionado" class="form-select">
@@ -56,7 +56,7 @@ const prestarLibro = async () => {
   if (!confirmar) return
 
   const token = localStorage.getItem('token')
-  const id_usuario = parseInt(localStorage.getItem('id_usuario')) // 👈 Asegura número
+  const id_usuario = parseInt(localStorage.getItem('id_usuario')) // Asegura número
 
   const hoy = new Date()
   const fecha_prestamo = hoy.toISOString().split('T')[0]
